@@ -3,3 +3,4 @@ env
 .env
 *.pptx
 five_people_test
+data/

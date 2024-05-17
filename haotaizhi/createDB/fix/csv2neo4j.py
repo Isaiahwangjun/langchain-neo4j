@@ -24,23 +24,24 @@ class DataLoader:
 
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    uri = "bolt://192.168.1.241:7687"  # or your Neo4j URI
+    uri = "bolt://localhost:7687"  # or your Neo4j URI
     user = "neo4j"
     password = "12345678"
     data_loader = DataLoader(uri, user, password)
-    base_file_name = 'file:///five_people_test/tww_BasicInfo_2024_4_1.csv'
-    org_file_name = 'file:///five_people_test/tww_Organization_2024_4_1.csv'
+    base_file_name = 'file:///tww_BasicInfo_2024_4_1.csv'
+    org_file_name = 'file:///tww_Organization_2024_4_1.csv'
 
     # base_file_name = 'https://drive.google.com/file/d/1JjD7aJkPpINGQ7atxWu-ISNzWIbcSaAK/view?usp=sharing'
     # org_file_name = 'https://drive.google.com/file/d/1WsE2M8fy63gEMYo_ZDl7OjcHE6Aq6jcm/view?usp=sharing'
 
-    base_file_name = 'https://drive.google.com/uc?export=download&id=1JjD7aJkPpINGQ7atxWu-ISNzWIbcSaAK'
-    org_file_name = 'https://drive.google.com/uc?export=download&id=1WsE2M8fy63gEMYo_ZDl7OjcHE6Aq6jcm'
+    # base_file_name = 'https://drive.google.com/uc?export=download&id=1JjD7aJkPpINGQ7atxWu-ISNzWIbcSaAK'
+    # org_file_name = 'https://drive.google.com/uc?export=download&id=1WsE2M8fy63gEMYo_ZDl7OjcHE6Aq6jcm'
 
     # Load BaseInfo.csv
+
     query_baseinfo = """
     LOAD CSV WITH HEADERS FROM $base_file_name AS row
-        MERGE (document:Document {text: coalesce(row.givenName + ',' + row.source, "Unknown"), source: $base_file_name})
+        MERGE (document:Document {textKG: coalesce(row.givenName + ',' + row.source, "Unknown"), source: $base_file_name})
         MERGE (person:Person {nameID: row.nameID})
         ON CREATE SET person.id = coalesce(row.givenName, "Unknown"),
                 person.artName = coalesce(row.artName, "Unknown"),

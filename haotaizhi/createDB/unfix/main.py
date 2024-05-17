@@ -14,7 +14,7 @@ def createDB(graph, text, source):
 
     default_prompt = getPrompt()
 
-    llm = ChatOpenAI(temperature=0, model_name="gpt-4-0125-preview")
+    llm = ChatOpenAI(temperature=0, model_name="gpt-4-turbo-2024-04-09")
     llm_transformer = LLMGraphTransformer(llm=llm, prompt=default_prompt)
     # llm_transformer 會將文章轉成節點跟關係
 
@@ -45,12 +45,12 @@ if __name__ == "__main__":
     NEO4J_PASSWORD = os.environ.get('NEO4J_PASSWORD')
     graph = Neo4jGraph()
 
-    file_path = r"C:\Users\wang\Downloads\tww_BasicInfo_2024_4_19.csv"
+    file_path = r"C:\Users\wang\.Neo4jDesktop\relate-data\dbmss\dbms-16f7da12-cd56-4273-8a65-9f4c08929232\import\tww_BasicInfo_2024_4_1.csv"
     with open(file_path, newline='', encoding='utf-8') as csvfile:
         csv_reader = csv.DictReader(csvfile)
 
         for row in csv_reader:
-            createDB(graph, row['introduction'], file_path)
+            createDB(graph, row['givenName'] + ',' + row['source'], file_path)
 
     # file_path = r"C:\Users\wang\Desktop\daoyi\HongKong\OCR_10_person\LineOCR\txt\金庸.txt"
     # with open(file_path, 'r', encoding='utf-8') as txtfile:

@@ -5,7 +5,7 @@ LOAD CSV WITH HEADERS FROM $source_file_name AS row
 
         MERGE (document:Document {text: coalesce(row.name + ',' + row.source, "Unknown"), source: $source_file_name})
 
-        FOREACH(ignoreMe IN CASE WHEN row.label_Article IS NOT NULL THEN [1] ELSE [] END |
+        FOREACH(ignoreMe IN CASE WHEN row.label_Project IS NOT NULL THEN [1] ELSE [] END |
             FOREACH (label_Project IN split(row.label_Project, '\n') |
                 MERGE (n:Project {id: label_Project})
                 MERGE (person)-[r:hasProject]->(n)

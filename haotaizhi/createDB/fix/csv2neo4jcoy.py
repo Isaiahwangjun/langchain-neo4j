@@ -21,7 +21,7 @@ class DataLoader:
 
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    uri = "bolt://localhost:7687"  # or your Neo4j URI
+    uri = "bolt://192.168.1.241:7691"  # or your Neo4j URI
     user = "neo4j"
     password = "12345678"
     data_loader = DataLoader(uri, user, password)

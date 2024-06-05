@@ -24,10 +24,10 @@ def chain(user_question):
     MODEL_NAME = os.getenv("MODEL_NAME")
 
     print(f"NEO4J_URI:{NEO4J_URI}")
-    if (NEO4J_URI == "bolt://192.168.1.241:7689"):
-        print("非固定節點")
-    else:
-        print("固定節點")
+    # if (NEO4J_URI == "bolt://192.168.1.241:7689"):
+    #     print("非固定節點")
+    # else:
+    #     print("固定節點")
 
     llm = ChatOpenAI(temperature=0, model_name=MODEL_NAME)
 
@@ -114,4 +114,5 @@ def chain(user_question):
         print(f"query: {query}\n")
         print(f"answer: {result}\n")
         print(cb)
+
         return response

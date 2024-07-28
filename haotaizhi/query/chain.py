@@ -9,6 +9,7 @@ from vector import index
 from structuredRetriever import structured_retriever
 import history
 from langchain_community.callbacks import get_openai_callback
+from entityChain import extract_question
 
 
 def chain(user_question):
@@ -48,15 +49,20 @@ def chain(user_question):
 
         structured_data = structured_retriever(question)
 
-        unstructured_data = [
-            el.page_content for el in vector_index.similarity_search(
-                question, k=int(UNSTRUCTURE_DATA_LIMIT))
-        ]
+        entity_chain = extract_question(llm=llm)
+        entities = entity_chain.invoke({"question": question})
+        all_unstructured_data = []
+        for entity in entities.names:
+            unstructured_data = [
+                el.page_content for el in vector_index.similarity_search(
+                    entity, k=int(UNSTRUCTURE_DATA_LIMIT))
+            ]
+            all_unstructured_data.extend(unstructured_data)
 
         final_data = f"""Structured data:
     {structured_data}
     Unstructured data:
-    {"#Document ". join(unstructured_data)}
+    {"#Document ". join(all_unstructured_data)}
         """
         # print(f"input: {final_data}")
         return final_data

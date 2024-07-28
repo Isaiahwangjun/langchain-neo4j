@@ -1,7 +1,8 @@
 import pandas as pd
 
-df = pd.read_csv('data/Article.csv', encoding='utf-8')
-df['url'] = df['srcID'].apply(
-    lambda x: f'https://nmtl2.daoyidh.com/zh-tw/main/articleInfo?artId={x}')
+df = pd.read_csv('new_data/BasicInfo.csv', encoding='utf-8')
+df['url'] = df['人名ID'].apply(
+    lambda x: f'https://nmtl.daoyidh.com/zh-tw/main/writerintro?personId={x}')
 
-df.to_csv('data/Article_url.csv', encoding='utf-8-sig', index=False)
+df.to_csv('new_data/BasicInfo_url.csv', encoding='utf-8-sig', index=False)
+print("odne")
